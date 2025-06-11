@@ -1,0 +1,27 @@
+test_that('"mean_spec" validation works as intended', {
+  expect_error(mean_spec(orders = "hello"), "invalid class \"mean_spec\" object: invalid object for slot \"orders\" in class \"mean_spec\": got class \"character\", should be or extend class \"numeric\"")
+  expect_error(mean_spec(long_memo = "hello"), "invalid object for slot \"long_memo\" in class \"mean_spec\": got class \"character\", should be or extend class \"logical\"")
+  expect_no_error(mean_spec(long_memo = TRUE))
+  expect_no_error(mean_spec(long_memo = FALSE))
+  expect_error(mean_spec(long_memo = c(FALSE, TRUE)), "@long_memo must be of length one")
+  expect_error(mean_spec(long_memo = logical(0)), "@long_memo must be of length one")
+  expect_no_error(mean_spec(orders = c(1, 1)))
+  expect_no_error(mean_spec(orders = c(0, 0)))
+  expect_no_error(mean_spec(orders = c(1, 0)))
+  expect_no_error(mean_spec(orders = c(0, 1)))
+  expect_no_error(mean_spec(orders = c(2, 2)))
+  expect_no_error(mean_spec(orders = c(2, 1)))
+  expect_no_error(mean_spec(orders = c(1, 2)))
+  expect_error(mean_spec(orders = c(1, 1, 1)), "@orders must be of length two and both elements must be at least zero")
+  expect_error(mean_spec(orders = numeric(0)), "@orders must be of length two and both elements must be at least zero")
+  expect_error(mean_spec(orders = c(0, -1)), "@orders must be of length two and both elements must be at least zero")
+  expect_error(mean_spec(orders = c(-1, 0)), "@orders must be of length two and both elements must be at least zero")
+
+  expect_no_error(mean_spec(include_mean = TRUE))
+  expect_no_error(mean_spec(include_mean = FALSE))
+  expect_error(mean_spec(include_mean = c(TRUE, FALSE)), "@include_mean must be of length one")
+  expect_error(mean_spec(include_mean = logical(0)), "@include_mean must be of length one")
+  expect_error(mean_spec(include_mean = "a"), "invalid object for slot \"include_mean\" in class \"mean_spec\": got class \"character\", should be or extend class \"logical\"")
+
+
+})

@@ -1,0 +1,11 @@
+test_that("ARMA / FARIMA orders are correctly specified", {
+  expect_false(order_checker_arma(c(1, 1)))
+  expect_false(order_checker_arma(c(2, 1)))
+  expect_false(order_checker_arma(c(1, 2)))
+  expect_false(order_checker_arma(c(0, 0)))
+  expect_false(order_checker_arma(c(0, 1)))
+  expect_false(order_checker_arma(c(1, 0)))
+  expect_false(!order_checker_arma(c(1)))
+  expect_false(!order_checker_arma(c(1, 0, 1)))
+  expect_false(!order_checker_arma(numeric(0)))
+})
