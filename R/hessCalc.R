@@ -16,7 +16,7 @@ hessCalc <- function(pars, func, control.args = list(
                     method.args = control.args, rt = rt)},
                   error = function(e1) {NaN})
 
-  sol <- tryCatch(expr = {solve(out)}, error = function(e1) {-1})
+  sol <- tryCatch(expr = {solve(out)}, error = function(e1) {matrix(-1)})
 
   # Try different settings
   while (control.args$eps > 1e-10 && (any(is.infinite(out)) || any(is.nan(out)) || any(diag(sol) < 0))) {
@@ -26,7 +26,7 @@ hessCalc <- function(pars, func, control.args = list(
               method.args = control.args, rt = rt)},
               error = function(e1) {NaN})
 
-    sol <- tryCatch(expr = {solve(out)}, error = function(e1) {-1})
+    sol <- tryCatch(expr = {solve(out)}, error = function(e1) {matrix(-1)})
 
   }
 
@@ -41,7 +41,7 @@ hessCalc <- function(pars, func, control.args = list(
               method.args = control.args, rt = rt)},
               error = function(e1) {NaN})
 
-    sol <- tryCatch(expr = {solve(out)}, error = function(e1) {-1})
+    sol <- tryCatch(expr = {solve(out)}, error = function(e1) {matrix(-1)})
 
   }
 

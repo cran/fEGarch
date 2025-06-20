@@ -110,14 +110,6 @@ model1
 #> AIC: -6.4945, BIC: -6.4880
 ```
 
-Using the model description in the documentation of `fEGarch_spec()`,
-the fitted model following the previous estimation results is
-$$r_t = 0.0003 + \sigma_t\eta_t \hspace{3mm} \text{with} \hspace{3mm} \eta_t \sim N(0,1), \hspace{3mm} \text{where}$$
-$$\ln\left(\sigma_t^2\right)=-8.6600 + (1-0.8680 B)^{-1}(1-B)^{-0.2754}g\left(\eta_{t-1}\right) \hspace{3mm}\text{with}$$
-$$g\left(\eta_{t-1}\right)=-0.2363\left[g_a\left(\eta_{t-1}\right)-E\left[g_a\left(\eta_{t-1}\right)\right]\right] + 0.3194\left[g_m\left(\eta_{t-1}\right)-E\left[g_m\left(\eta_{t-1}\right)\right]\right], \hspace{3mm}\text{where}$$
-$$g_a\left(\eta_{t-1}\right)=\text{sgn}\left(\eta_{t-1}\right)\ln\left(\left|\eta_{t-1}\right|+1\right)\hspace{3mm}\text{and}$$
-$$g_m\left(\eta_{t-1}\right)=\ln\left(\left|\eta_{t-1}\right|+1\right).$$
-
 A convenient way to implement various specific model specifications is
 available via a selection of wrappers for `fEGarch_spec()`. They all
 only have the function arguments `orders` and `cond_dist` from
@@ -672,10 +664,10 @@ A better model regarding VaR and ES forecasting for this particular
 example could be implemented and checked as follows.
 
 ``` r
-# Fit and check a FILog-GARCH(1, d, 1) with
+# Fit and check an ARMA(1, 0)-FILog-GARCH(1, d, 1) with
 # conditional t-distribution
 new_model2 <- filoggarch_spec(cond_dist = "std") %>%
-  fEGarch(rt, n_test = 250)
+  fEGarch(rt, n_test = 250, meanspec = mean_spec(orders = c(1, 0)))
 
 risk_nm2 <- new_model2 %>%
   predict_roll() %>%
@@ -692,13 +684,13 @@ risk_nm2 %>%
 #> ************
 #> 
 #> Conf. level: 0.975
-#> Breaches: 7
-#> Cumul. prob.: 0.7103
+#> Breaches: 8
+#> Cumul. prob.: 0.8229
 #> Zone: Green zone
 #> 
 #> Conf. level: 0.99
-#> Breaches: 3
-#> Cumul. prob.: 0.7581
+#> Breaches: 4
+#> Cumul. prob.: 0.8922
 #> Zone: Green zone
 #> 
 #> 
@@ -706,13 +698,13 @@ risk_nm2 %>%
 #> ***********
 #> 
 #> Conf. level: 0.975
-#> Severity of breaches: 3.5922
-#> Cumul. prob.: 0.6281
+#> Severity of breaches: 4.3408
+#> Cumul. prob.: 0.8024
 #> Zone: Green zone
 #> 
 #> Conf. level: 0.99
-#> Severity of breaches: 0.8655
-#> Cumul. prob.: 0.3362
+#> Severity of breaches: 0.9460
+#> Cumul. prob.: 0.3691
 #> Zone: Green zone
 #> 
 #> 
@@ -723,7 +715,7 @@ risk_nm2 %>%
 #> 
 #> Following 99%-VaR, 97.5%-VaR and 97.5%-ES.
 #> 
-#> WAD: 0.4695
+#> WAD: 1.2691
 #> 
 #> 
 #> ***************************************
@@ -733,15 +725,15 @@ risk_nm2 %>%
 #> H0: true share of covered observations = theoretical share of VaR
 #> 
 #> Conf. level: 0.975
-#> Breaches: 7
-#> Test statistic: 0.0889
-#> p-value: 0.7656
+#> Breaches: 8
+#> Test statistic: 0.4624
+#> p-value: 0.4965
 #> Decision: Do not reject H0
 #> 
 #> Conf. level: 0.99
-#> Breaches: 3
-#> Test statistic: 0.0949
-#> p-value: 0.7580
+#> Breaches: 4
+#> Test statistic: 0.7691
+#> p-value: 0.3805
 #> Decision: Do not reject H0
 #> 
 #> 
@@ -753,15 +745,15 @@ risk_nm2 %>%
 #>     of breach or no breach at previous time point
 #> 
 #> Conf. level: 0.975
-#> Breaches: 7
-#> Test statistic: 0.4050
-#> p-value: 0.5245
+#> Breaches: 8
+#> Test statistic: 0.5312
+#> p-value: 0.4661
 #> Decision: Do not reject H0
 #> 
 #> Conf. level: 0.99
-#> Breaches: 3
-#> Test statistic: 0.0732
-#> p-value: 0.7868
+#> Breaches: 4
+#> Test statistic: 0.1306
+#> p-value: 0.7178
 #> Decision: Do not reject H0
 #> 
 #> 
@@ -774,15 +766,15 @@ risk_nm2 %>%
 #>     and equal to theoretical share of VaR
 #> 
 #> Conf. level: 0.975
-#> Breaches: 7
-#> Test statistic: 0.5002
-#> p-value: 0.7787
+#> Breaches: 8
+#> Test statistic: 1.0081
+#> p-value: 0.6041
 #> Decision: Do not reject H0
 #> 
 #> Conf. level: 0.99
-#> Breaches: 3
-#> Test statistic: 0.1722
-#> p-value: 0.9175
+#> Breaches: 4
+#> Test statistic: 0.9120
+#> p-value: 0.6338
 #> Decision: Do not reject H0
 ```
 
@@ -853,6 +845,72 @@ risk_obj %>%
 # Inclusion of the output is omitted here to save space.
 ```
 
+### Model options for non-return data
+
+The package allows for the implementation of dual long-memory models
+(long-memory in mean together with long-memory in volatility), which can
+be useful for applications to non-return data as well. In the following,
+a FARIMA($1,d,0$)-FIMLog-GARCH($1,d,1$) model (with conditional skewed
+average Laplace distribution) is applied to the data `UKinflation`,
+which contains monthly UK inflation rates over time and which is
+provided in the package.
+
+``` r
+xt <- UKinflation
+dual_lm_model <- fimloggarch_spec(cond_dist = "sald") %>%
+  fEGarch(xt, meanspec = mean_spec(orders = c(1, 0), long_memo = TRUE))
+dual_lm_model
+#> *************************************
+#> *     Fitted EGARCH Family Model    *
+#> *************************************
+#>  
+#> Type: egarch
+#> Orders: (1, 1)
+#> Modulus: (TRUE, TRUE)
+#> Powers: (0, 0)
+#> Long memory: TRUE
+#> Cond. distribution: sald
+#>  
+#> ARMA orders (cond. mean): (1, 0)
+#> Long memory (cond. mean): TRUE
+#> 
+#> Scale estimation: FALSE
+#>  
+#> Fitted parameters:
+#> 
+#>               par     se     tval   pval
+#> mu         0.4038 0.0435   9.2930 0.0000
+#> ar1       -0.0054 0.0024  -2.2281 0.0259
+#> D          0.2323 0.0076  30.5330 0.0000
+#> omega_sig -1.4809 0.0944 -15.6941 0.0000
+#> phi1       0.7217 0.1246   5.7909 0.0000
+#> kappa      0.3393 0.0989   3.4293 0.0006
+#> gamma      0.0331 0.1021   0.3243 0.7457
+#> d          0.1576 0.1315   1.1986 0.2307
+#> P          1.0000     NA       NA     NA
+#> skew       1.2916 0.0690  18.7077 0.0000
+#>  
+#> Information criteria (parametric part):
+#> AIC: 1.3413, BIC: 1.4208
+
+oldpar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), cex = 1, mar = c(4, 4, 3, 2) + 0.1)
+
+ts.plot(xt, fitted(dual_lm_model), col = c("grey64", "red"),
+        xlab = "Year", ylab = "Inflation rate", 
+        main = "UK inflation rate together with conditional means")
+plot.ts(sigma(dual_lm_model), xlab = "Year",
+        ylab = "Conditional standard deviation",
+        main = "Conditional volatility of UK inflation")
+```
+
+<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" />
+
+``` r
+
+par(oldpar)
+```
+
 ## Main functions
 
 The main functions of the package are:
@@ -912,7 +970,10 @@ The package, however, provides many other useful functions to discover.
 The package contains an example time series `SP500`, namely the Standard
 and Poor’s 500 daily log-return series from January 04, 2000, until
 November 30, 2024, obtained from Yahoo Finance. The series is formatted
-as a time series object of class `"zoo"`.
+as a time series object of class `"zoo"`. Furthermore, it contains the
+dataset `UKinflation` with the monthly inflation rate of the UK from
+January 1965 to December 2000. This second series is formatted as a time
+series of class `"ts"`.
 
 ## Authors
 

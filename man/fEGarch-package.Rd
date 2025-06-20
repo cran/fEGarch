@@ -105,6 +105,7 @@ The package includes a few datasets. Follow the corresponding links to the
 documentation of the datasets to find additional information including the
 sources.
 \describe{
+\item{\code{\link{UKinflation}}:}{monthly inflation rate of the UK.}
 \item{\code{\link{SP500}}:}{daily log-returns of the S&P 500 index.}
 }
 }

@@ -91,13 +91,13 @@ fractional differencing parameter is \eqn{d \in [0,1]}.
 \eqn{g\left(\cdot\right)} can be defined in different ways.
 Following a type I specification (\code{model_type = "egarch"}), we have
 \deqn{g\left(\eta_t\right)=\kappa \left\{g_a\left(\eta_t\right) - E\left[g_a\left(\eta_t\right)\right] \right\} + \gamma\left\{g_m\left(\eta_t\right)-E\left[ g_m\left(\eta_t\right)\right]\right\}}
-with \eqn{g_a\left(\eta_t\right)=g_m\left(\eta_t\right)=\eta_t} and consequently
-\eqn{E\left[g_a\left(\eta_t\right)\right] = E\left(\eta_t\right) = 0} and
-\eqn{E\left[\left|g_m\left( \eta_t \right)\right|\right] = E\left(\left| \eta_t\right|\right)},
+with \eqn{g_a\left(\eta_t\right)} and \eqn{g_m\left(\eta_t\right)} being
+suitable transformations of \eqn{\eta_t} and
 where \eqn{\kappa} and \eqn{\gamma} are two additional real-valued
-parameters. Nonetheless, the functions \eqn{g_a\left(\cdot\right)} and
-\eqn{g_m\left(\cdot\right)} can be any suitable transformation of
-\eqn{\eta_t}.
+parameters. In case of a simple (FI)EGARCH, we have
+\eqn{g_a\left(\eta_t\right) = \eta_t} (and therefore with
+\eqn{E\left[g_a\left(\eta_t\right)\right] = 0}) and
+\eqn{g_m\left(\eta_t\right) = \left|\eta_t \right|}.
 
 Generally, we consider two cases:
 \deqn{g_{1,a}\left(\eta_t\right)=\text{sgn}\left(\eta_t\right)\left|\eta_t\right|^{p_a}/p_a \text{ and}}
@@ -122,8 +122,12 @@ are employed for \eqn{p_a=0}. Completely analogous
 thoughts hold for \eqn{g_{1,m}} and \eqn{g_{2,m}} and the second
 elements in the arguments \code{modulus} and \code{powers}. The aforementioned
 model family is a type I model selectable through
-\code{model_type = "egarch"}. One of such type I models is the FIMLog-GARCH
-(Feng et al., 2023).
+\code{model_type = "egarch"}. Simple (FI)EGARCH models are given through
+selection of \eqn{g_{1,a}(\cdot)} and \eqn{g_{1,m}(\cdot)}
+in combination with \eqn{p_a = p_m = 1}. Another of such type I models
+is the FIMLog-GARCH (Feng et al., 2023), where instead
+\eqn{g_{2,a}(\cdot)} and \eqn{g_{2,m}(\cdot)} are selected
+with \eqn{p_a = p_m = 0}.
 
 \eqn{\textbf{Type II}:}
 

@@ -216,10 +216,11 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_egarch",
       horizon = n.ahead
     ))
   } else {
-    # Use AR-representation
+    # Use MA-representation
     coef_inf_garch <- ma_infty(
       ar = phi, ma = psi_2, d = d, max_i = trunc - 1
     )
+
     c(sigt_egarch_forecast_longCpp(
       et = zoo::coredata(object@etat),
       coef_inf = coef_inf_garch,
@@ -286,8 +287,12 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_loggarch",
     numeric(0)
   }
 
-  mu <- if (exists("mu", where = as.list(model_pars)) && !is.null(object@nonpar_model)) {
-    model_pars[["mu"]]
+  mu <- if (exists("mu", where = as.list(model_pars))) {
+    if (!is.null(object@nonpar_model)) {
+      0
+    } else {
+      model_pars[["mu"]]
+    }
   } else {
     0
   }
@@ -409,8 +414,12 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_aparch",
     numeric(0)
   }
 
-  mu <- if (exists("mu", where = as.list(model_pars))&& !is.null(object@nonpar_model)) {
-    model_pars[["mu"]]
+  mu <- if (exists("mu", where = as.list(model_pars))) {
+    if (!is.null(object@nonpar_model)) {
+      0
+    } else {
+      model_pars[["mu"]]
+    }
   } else {
     0
   }
@@ -497,8 +506,12 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_fiaparch",
 
   d <- model_pars[["d"]]
 
-  mu <- if (exists("mu", where = as.list(model_pars))&& !is.null(object@nonpar_model)) {
-    model_pars[["mu"]]
+  mu <- if (exists("mu", where = as.list(model_pars))) {
+    if (!is.null(object@nonpar_model)) {
+      0
+    } else {
+      model_pars[["mu"]]
+    }
   } else {
     0
   }
@@ -841,7 +854,12 @@ methods::setMethod("predict_roll", "fEGarch_fit",
       test_obs <- (object@test_obs - mu_h) / scale_h
       object2@rt <- zoo::coredata((object2@rt - object2@cmeans) / object2@scale_fun)
       object2@sigt <- zoo::coredata(object2@sigt / object2@scale_fun)
-      object2@cmeans <- rep(0, length(object2@rt))
+      check_mu <- "mu" %in% names(object2@pars)
+      object2@cmeans <- if (!check_mu) {
+        rep(0, length(object2@rt))
+      } else {
+        rep(object2@pars[["mu"]], length(object2@rt))
+      }
       object2@scale_fun <- NULL
       object2@nonpar_model <- NULL
 
@@ -916,7 +934,7 @@ methods::setMethod("predict_roll", "fEGarch_fit",
 
     if (np_check) {
       sigt_out <- sigt_out * scale_h
-      cmeans_out <- cmeans_out + mu_h
+      cmeans_out <- cmeans_out - cmeans_out + mu_h
     }
 
     fEGarch_forecast(

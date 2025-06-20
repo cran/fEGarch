@@ -10,3 +10,17 @@
 #'
 #'\url{https://finance.yahoo.com/quote/^GSPC/}
 "SP500"
+
+#' Monthly Inflation Rate of the UK
+#'
+#' A \code{"ts"} object that contains the monthly inflation rate of
+#' the UK from January 1956 to December 2000. It is the growth rate
+#' of the consumer price index from the previous period.
+#'
+#'@source The data was obtained from the databank of the Federal
+#'Reserve Bank of St. Louis
+#'(accessed: 2025-06-17) and then transformed into a time series
+#'\code{"ts"} object using R.
+#'
+#'\url{https://fred.stlouisfed.org/series/CPALTT01GBM657N}
+"UKinflation"
