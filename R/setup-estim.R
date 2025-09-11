@@ -44,7 +44,9 @@ nllhood_calc <- function(input_list, x, dfun) {
   skew <- input_list$skew
   shape <- input_list$shape
 
-  -sum(log(dfun(x, cmeans, sigt, shape, skew)))
+  lhoods <- dfun(x, cmeans, sigt, shape, skew)
+  lhoods[lhoods == 0] <- 1e-25   # safety measure to avoid -Inf llhood
+  -sum(log(lhoods))
 
 }
 

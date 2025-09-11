@@ -16,7 +16,7 @@ The goal of `fEGarch` is to provide easy access to a broad family of
 exponential generalized autoregressive conditional heteroskedasticity
 (EGARCH) models both with either short or long memory. The six most
 common conditional distributions, i.e. a normal distribution, a
-$t$-distribution, a generalized error distribution, and the skewed
+t-distribution, a generalized error distribution, and the skewed
 variants of those three, are available. Furthermore, we introduce the
 average Laplace distribution and its skewed variant as newly selectable
 conditional distributions. Overall, the EGARCH family models are a
@@ -333,12 +333,13 @@ plot.zoo(obj, screens = c(1, 1, 2), col = c(1, 2, 1),
 ### Alternatives
 
 The `fEGarch` package also allows for the estimation of FIAPARCH and
-FIGARCH models, however, currently only with fixed model orders $p=q=1$.
-For these two models, there are two fitting functions `figarch()` and
-`fiaparch()` available without any preceding model specification steps.
-Model specifications can be made via arguments within these functions
-directly. Alternatively, the wrapper `garchm_estim()` can be used to
-select and fit a GARCH-type model (not belonging to the EGARCH family).
+FIGARCH models, however, currently only with fixed model orders p = q
+= 1. For these two models, there are two fitting functions `figarch()`
+and `fiaparch()` available without any preceding model specification
+steps. Model specifications can be made via arguments within these
+functions directly. Alternatively, the wrapper `garchm_estim()` can be
+used to select and fit a GARCH-type model (not belonging to the EGARCH
+family).
 
 ``` r
 model_fiaparch <- rt %>%
@@ -850,7 +851,7 @@ risk_obj %>%
 The package allows for the implementation of dual long-memory models
 (long-memory in mean together with long-memory in volatility), which can
 be useful for applications to non-return data as well. In the following,
-a FARIMA($1,d,0$)-FIMLog-GARCH($1,d,1$) model (with conditional skewed
+a FARIMA(1, d ,0)-FIMLog-GARCH(1, d, 1) model (with conditional skewed
 average Laplace distribution) is applied to the data `UKinflation`,
 which contains monthly UK inflation rates over time and which is
 provided in the package.
@@ -972,7 +973,7 @@ and Poor’s 500 daily log-return series from January 04, 2000, until
 November 30, 2024, obtained from Yahoo Finance. The series is formatted
 as a time series object of class `"zoo"`. Furthermore, it contains the
 dataset `UKinflation` with the monthly inflation rate of the UK from
-January 1965 to December 2000. This second series is formatted as a time
+January 1956 to December 2000. This second series is formatted as a time
 series of class `"ts"`.
 
 ## Authors
@@ -1000,5 +1001,6 @@ If you are using this software for your publication, please consider
 citing
 
 - Schulz, D., Feng, Y., Peitz, C., & Ayensu, O. K. (2025). fEGarch:
-  Estimation of a Broad Family of EGARCH Models. R package version
-  1.0.0. URL: <https://CRAN.R-project.org/package=fEGarch>.
+  SM/LM EGARCH & GARCH, VaR/ES Backtesting & Dual LM Extensions. R
+  package version 1.0.2. URL:
+  <https://CRAN.R-project.org/package=fEGarch>.

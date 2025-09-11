@@ -1,11 +1,3 @@
-smooth_min <- function(x, beta) {
-  -log(sum(exp(-beta * x))) / beta
-}
-
-smooth_max <- function(x, beta) {
-  log(sum(exp(beta * x))) / beta
-}
-
 general_garch_fitting <- function(rt, model_type, orders = c(1, 1),
                         cond_dist = c("norm", "std", "ged", "ald", "snorm", "sstd", "sged", "sald"),
                         drange = c(0, 1),
@@ -33,7 +25,7 @@ general_garch_fitting <- function(rt, model_type, orders = c(1, 1),
 
     nonpar_out <- run_nonpar(nonparspec = nonparspec,
                control_nonpar = control_nonpar, rt = rt, n_test = n_test,
-               mean_after_nonpar = mean_after_nonpar)
+               mean_after_nonpar = mean_after_nonpar, lm = lm)
     rt <- nonpar_out$rt
     meanspec <- nonpar_out$meanspec
     nonpar_result <- nonpar_out$nonpar_result

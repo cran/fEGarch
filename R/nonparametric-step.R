@@ -1,8 +1,8 @@
-run_nonpar <- function(nonparspec, control_nonpar, rt, n_test, mean_after_nonpar) {
+run_nonpar <- function(nonparspec, control_nonpar, rt, n_test, mean_after_nonpar, lm) {
 
   nonpar_result <- nonpar_est(
     rt = rt,
-    lm = TRUE,
+    lm = lm,
     nonparspec = nonparspec,
     n_test = n_test,
     control_nonpar = control_nonpar

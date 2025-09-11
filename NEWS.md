@@ -1,4 +1,17 @@
-# fEGarch 1.0.1
+# fEGarch 1.0.2 (2025-09-11)
+- required package update for RcppArmadillo update to Armadillo 15.0.*
+- a bug was fixed, where for the nonparametric scale estimation always the
+  automated bandwidth selection under long-memory errors was employed,
+  even for short-memory models; now the functions select the appropriate
+  bandwidth selection algorithm correctly for short- and long-memory
+  models
+- a safety measure was included to avoid that the log-likelihood can
+  become -Inf
+- math formulas were fully removed from the README, because they were not
+  displayed properly on CRAN
+- some minor typos were corrected in the README
+
+# fEGarch 1.0.1 (2025-06-20)
 - a bug was fixed, where for most models except for EGARCH-type models the
   mean estimate was not considered properly in volatility forecasts
 - a bug was fixed, where for EGARCH-family models rolling point forecasts

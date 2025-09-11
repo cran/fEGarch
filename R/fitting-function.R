@@ -338,7 +338,7 @@ fEGarch <- function(spec = egarch_spec(),
 
     nonpar_out <- run_nonpar(nonparspec = nonparspec,
                control_nonpar = control_nonpar, rt = rt, n_test = n_test,
-               mean_after_nonpar = mean_after_nonpar)
+               mean_after_nonpar = mean_after_nonpar, lm = spec@long_memo)
     rt <- nonpar_out$rt
     meanspec <- nonpar_out$meanspec
     nonpar_result <- nonpar_out$nonpar_result
