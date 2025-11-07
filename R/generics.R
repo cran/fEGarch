@@ -64,45 +64,42 @@ setGeneric("include_mean<-", function(x, value) {standardGeneric("include_mean<-
 
 #====================================================#
 
-#'Generic for Fitting EGARCH Family Models
-#'
-#'The generic is currently without use.
-#'
-#'@param spec the generic is currently without use.
-#'@param rt the generic is currently without use.
-#'@param drange the generic is currently without use.
-#'@param meanspec the generic is currently without use.
-#'@param Drange the generic is currently without use.
-#'@param n_test the generic is currently without use.
-#'@param start_pars the generic is currently without use.
-#'@param LB the generic is currently without use.
-#'@param UB the generic is currently without use.
-#'@param control the generic is currently without use.
-#'@param parallel the generic is currently without use.
-#'@param ncores the generic is currently without use.
-#'@param trunc the generic is currently without use.
-#'@param presample the generic is currently without use.
-#'@param Prange the generic is currently without use.
-#'
-#'@return
-#'The generic is currently without use. Nothing is returned.
-#'
-#'@export
-#'
-#'
+#Generic for Fitting EGARCH Family Models
+#
+#The generic is currently without use.
+#
+#@param spec the generic is currently without use.
+#@param rt the generic is currently without use.
+#@param drange the generic is currently without use.
+#@param meanspec the generic is currently without use.
+#@param Drange the generic is currently without use.
+#@param n_test the generic is currently without use.
+#@param start_pars the generic is currently without use.
+#@param LB the generic is currently without use.
+#@param UB the generic is currently without use.
+#@param control the generic is currently without use.
+#@param parallel the generic is currently without use.
+#@param ncores the generic is currently without use.
+#@param trunc the generic is currently without use.
+#@param presample the generic is currently without use.
+#@param Prange the generic is currently without use.
+#
+#@return
+#The generic is currently without use. Nothing is returned.
+#
+#
+#
 
 setGeneric("fEGarch_fit", function(spec, rt, drange = c(0, 1), meanspec = mean_spec(), Drange = c(0, 1), n_test = 0, start_pars = NULL, LB = NULL, UB = NULL, control = list(), parallel = TRUE, ncores = max(1, future::availableCores() - 1), trunc = floor(0.4 * length(rt)), presample = 50, Prange = c(1, 5)) {standardGeneric("fEGarch_fit")})
 
 #====================================================#
 
-#'@export
-#'@rdname forecasting-generics
+#@rdname forecasting-generics
 setGeneric("fEGarch_predict", function(object, n.ahead = 10, trunc = NULL, ...) {standardGeneric("fEGarch_predict")})
 
 #====================================================#
 
-#'@export
-#'@rdname forecasting-generics
+#@rdname forecasting-generics
 setGeneric("predict_internal", function(object, n.ahead = 10, trunc = NULL, ...) {standardGeneric("predict_internal")})
 
 #====================================================#
@@ -112,7 +109,6 @@ setGeneric("predict_internal", function(object, n.ahead = 10, trunc = NULL, ...)
 #'The generics are themselves without use.
 #'
 #'@param object the generics are currently without use.
-#'@param n.ahead the generics are currently without use.
 #'@param step_size the generics are currently without use.
 #'@param trunc the generics are currently without use.
 #'@param ... the generics are currently without use.

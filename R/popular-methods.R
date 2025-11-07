@@ -7,7 +7,7 @@
 #'@param object an object either of class \code{"fEGarch_fit"} or
 #'\code{"fEGarch_forecast"}.
 #'
-#'@importFrom rugarch sigma
+#'@importFrom stats sigma
 #'@exportMethod sigma
 #'@rdname sigma
 #'@aliases sigma,fEGarch_fit-method

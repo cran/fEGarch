@@ -218,7 +218,7 @@ distr_est <- function(x, dist = c("norm", "std", "ged", "ald", "snorm", "sstd", 
   }
 
   if (skew_par) {
-    start_skew <- 1
+    start_skew <- 0.98
     LB_skew <- 0.3
     UB_skew <- 3
     name_skew <- "skew"
@@ -229,8 +229,8 @@ distr_est <- function(x, dist = c("norm", "std", "ged", "ald", "snorm", "sstd", 
 
   if (is.null(fix_mean)) {
     start_mean <- mean(x)
-    LB_mean <- min(x)
-    UB_mean <- max(x)
+    LB_mean <- 0.2 * (min(x) - start_mean) + start_mean
+    UB_mean <- 0.2 * (max(x) - start_mean) + start_mean
     name_mean <- "mean"
   } else {
     start_mean <- LB_mean <- UB_mean <- numeric(0)

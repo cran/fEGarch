@@ -972,31 +972,31 @@ goal_fun_creator_egarch <- function(
 
 }
 
-#'Fitting Method for Type I EGARCH-Family Models
-#'
-#'Fits an EGARCH-family model of Type I. The method
-#'is not being exported.
-#'
-#'@param spec the generic is currently without use.
-#'@param rt the generic is currently without use.
-#'@param drange the generic is currently without use.
-#'@param meanspec the generic is currently without use.
-#'@param Drange the generic is currently without use.
-#'@param n_test the generic is currently without use.
-#'@param start_pars the generic is currently without use.
-#'@param LB the generic is currently without use.
-#'@param UB the generic is currently without use.
-#'@param control the generic is currently without use.
-#'@param parallel the generic is currently without use.
-#'@param ncores the generic is currently without use.
-#'@param trunc the generic is currently without use.
-#'@param presample the generic is currently without use.
-#'@param Prange the generic is currently without use.
-#'
-#'@return
-#'Returns an object of class \code{"fEGarch_fit_egarch"}.
-#'
-#'
+#Fitting Method for Type I EGARCH-Family Models
+#
+#Fits an EGARCH-family model of Type I. The method
+#is not being exported.
+#
+#@param spec the generic is currently without use.
+#@param rt the generic is currently without use.
+#@param drange the generic is currently without use.
+#@param meanspec the generic is currently without use.
+#@param Drange the generic is currently without use.
+#@param n_test the generic is currently without use.
+#@param start_pars the generic is currently without use.
+#@param LB the generic is currently without use.
+#@param UB the generic is currently without use.
+#@param control the generic is currently without use.
+#@param parallel the generic is currently without use.
+#@param ncores the generic is currently without use.
+#@param trunc the generic is currently without use.
+#@param presample the generic is currently without use.
+#@param Prange the generic is currently without use.
+#
+#@return
+#Returns an object of class \code{"fEGarch_fit_egarch"}.
+#
+#
 setMethod("fEGarch_fit", "egarch_type_spec",
   function(spec = egarch_spec(), rt, drange = c(0, 1), meanspec = mean_spec(), Drange = c(0, 1),
     n_test = 0, start_pars = NULL, LB = NULL, UB = NULL, control = list(), parallel = TRUE,
@@ -1132,9 +1132,9 @@ setMethod("fEGarch_fit", "egarch_type_spec",
 
   if (is.null(start_pars) || is.null(LB) || is.null(UB)) {
     mean_rt <- list(NULL, mean(rt_core))[[incl_mean + 1]]
-    min_rt <- list(NULL, min(rt_core))[[incl_mean + 1]]
-    max_rt <- list(NULL, max(rt_core))[[incl_mean + 1]]
-    skew_start <- list(NULL, 1)[[skew_par + 1]]
+    min_rt <- list(NULL, suppressWarnings(0.2 * min(rt_core - mean_rt) + mean_rt))[[incl_mean + 1]]
+    max_rt <- list(NULL, suppressWarnings(0.2 * max(rt_core - mean_rt) + mean_rt))[[incl_mean + 1]]
+    skew_start <- list(NULL, 0.98)[[skew_par + 1]]
     skew_low <- list(NULL, 1e-15)[[skew_par + 1]]
     skew_up <- list(NULL, Inf)[[skew_par + 1]]
 
@@ -1567,31 +1567,31 @@ goal_fun_creator_loggarch <- function(
 
 }
 
-#'Fitting Method for Type II EGARCH-Family Models
-#'
-#'Fits an EGARCH-family model of Type II. The method
-#'is not being exported.
-#'
-#'@param spec the generic is currently without use.
-#'@param rt the generic is currently without use.
-#'@param drange the generic is currently without use.
-#'@param meanspec the generic is currently without use.
-#'@param Drange the generic is currently without use.
-#'@param n_test the generic is currently without use.
-#'@param start_pars the generic is currently without use.
-#'@param LB the generic is currently without use.
-#'@param UB the generic is currently without use.
-#'@param control the generic is currently without use.
-#'@param parallel the generic is currently without use.
-#'@param ncores the generic is currently without use.
-#'@param trunc the generic is currently without use.
-#'@param presample the generic is currently without use.
-#'@param Prange the generic is currently without use.
-#'
-#'@return
-#'Returns an object of class \code{"fEGarch_fit_loggarch"}.
-#'
-#'
+#Fitting Method for Type II EGARCH-Family Models
+#
+#Fits an EGARCH-family model of Type II. The method
+#is not being exported.
+#
+#@param spec the generic is currently without use.
+#@param rt the generic is currently without use.
+#@param drange the generic is currently without use.
+#@param meanspec the generic is currently without use.
+#@param Drange the generic is currently without use.
+#@param n_test the generic is currently without use.
+#@param start_pars the generic is currently without use.
+#@param LB the generic is currently without use.
+#@param UB the generic is currently without use.
+#@param control the generic is currently without use.
+#@param parallel the generic is currently without use.
+#@param ncores the generic is currently without use.
+#@param trunc the generic is currently without use.
+#@param presample the generic is currently without use.
+#@param Prange the generic is currently without use.
+#
+#@return
+#Returns an object of class \code{"fEGarch_fit_loggarch"}.
+#
+#
 setMethod("fEGarch_fit", "loggarch_type_spec",
   function(spec = loggarch_spec(), rt, drange = c(0, 1), meanspec = mean_spec(), Drange = c(0, 1), n_test = 0, start_pars = NULL, LB = NULL, UB = NULL, control = list(), parallel = TRUE, ncores = max(1, future::availableCores() - 1), trunc = "none", presample = 50, Prange = c(1, 5)) {
 
@@ -1620,9 +1620,7 @@ setMethod("fEGarch_fit", "loggarch_type_spec",
 
   # Obtain model orders
   order <- orders(spec)
-  if (order[[2]] > order[[1]]) {
-    warning("For a Log-GARCH-type model, the order q should usually not be greater than the order p; not following this may lead to estimation problems.")
-  }
+
   p <- order[[1]]
   q <- order[[2]]
   # Conditional distribution
@@ -1710,9 +1708,9 @@ setMethod("fEGarch_fit", "loggarch_type_spec",
 
   if (is.null(start_pars) || is.null(LB) || is.null(UB)) {
     mean_rt <- list(NULL, mean(rt_core))[[incl_mean + 1]]
-    min_rt <- list(NULL, min(rt_core))[[incl_mean + 1]]
-    max_rt <- list(NULL, max(rt_core))[[incl_mean + 1]]
-    skew_start <- list(NULL, 1)[[skew_par + 1]]
+    min_rt <- list(NULL, suppressWarnings(0.2 * min(rt_core - mean_rt) + mean_rt))[[incl_mean + 1]]
+    max_rt <- list(NULL, suppressWarnings(0.2 * max(rt_core - mean_rt) + mean_rt))[[incl_mean + 1]]
+    skew_start <- list(NULL, 0.98)[[skew_par + 1]]
     skew_low <- list(NULL, 1e-15)[[skew_par + 1]]
     skew_up <- list(NULL, Inf)[[skew_par + 1]]
 

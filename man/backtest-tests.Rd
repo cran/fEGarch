@@ -79,19 +79,19 @@ standardized innovations and with \eqn{\hat \eta_t} as the standardized residual
 of a fitted GARCH-type model (or of its semiparametric extension).
 Then \eqn{B \overset{a}{\sim}N(\mu_{\text{ES}}, \sigma^2_{\text{ES}})} with
 \eqn{\mu_{\text{ES}} = 0.5(1-\alpha)n} and
-\eqn{\sigma^2_{\text{ES}} = (1-\alpha)[(1+3\alpha) / 12]}. The cumulative
+\eqn{\sigma^2_{\text{ES}} = (1-\alpha)[(1+3\alpha) / 12]n}. The cumulative
 probability of observing a severity of breaches of \eqn{B} or less can
 be computed and classified in the same way as for the VaR traffic light test
 using this asymptotic distribution.
 
 Weighted Absolute Deviation (WAD) (\code{WAD}):
-Following the standard computation of the 99%-VaR, the 97.5%-VaR and the
-97.5%-ES for the traffic light tests, the WAD criterion takes all of these
+Following the standard computation of the 99\%-VaR, the 97.5\%-VaR and the
+97.5\%-ES for the traffic light tests, the WAD criterion takes all of these
 into account and summarizes them into one numeric value. Let \eqn{N_1} be the
-observed breaches for the 99%-VaR for the test set and let \eqn{\mu_1} be the
+observed breaches for the 99\%-VaR for the test set and let \eqn{\mu_1} be the
 corresponding expected number of breaches. \eqn{N_2} and \eqn{\mu_2} are to
-understood analogously for the 97.5%-VaR. \eqn{N_3} is then the severity of
-breaches of the 97.5%-ES (i.e. it is equal to \eqn{B} from before) and \eqn{\mu_3}
+understood analogously for the 97.5\%-VaR. \eqn{N_3} is then the severity of
+breaches of the 97.5\%-ES (i.e. it is equal to \eqn{B} from before) and \eqn{\mu_3}
 is \eqn{\mu_{\text{ES}}} from before. Then
 \deqn{\text{WAD} = \frac{|N_1-\mu_1|}{\mu_1} + \frac{|N_2-\mu_2|}{\mu_2} + \frac{|N_3-\mu_3|}{\mu_3}.}
 See also Letmathe et al. (2022) for further information.

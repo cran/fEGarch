@@ -64,7 +64,7 @@ Provides easy access to value-at-risk (VaR) and expected shortfall (ES)
 computation for available models in this package. VaR and ES can either
 be computed based on (a) fitted conditional means and conditional
 standard deviations for a training period, or following (b) point forecasts
-(either multistep or rolling) of the conditional means and conditional
+(one-step rolling) of the conditional means and conditional
 standard deviations.
 }
 \details{

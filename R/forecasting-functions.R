@@ -76,24 +76,24 @@ arma_farima_forecasts <- function(ar, ma, D, pqg0, lm_arma, mu, x, innov, n.ahea
 # Forecasting methods (multistep)
 
 # For EGARCH-type
-#'Prediction Methods for Package's Models
-#'
-#'Produces forecasts of the conditional standard deviation
-#'(and of the conditional mean) following package's models.
-#'These methods are not being exported and are used internally
-#'only.
-#'
-#'@param object these methods are not being exported.
-#'@param n.ahead these methods are not being exported.
-#'@param trunc these methods are not being exported.
-#'@param ... these methods are not being exported.
-#'
-#'@return
-#'They return lists with two numeric vectors as elements named
-#'\code{sigt} and \code{cmeans}.
-#'
-#'@rdname forecasting-model-methods
-#'
+#Prediction Methods for Package's Models
+#
+#Produces forecasts of the conditional standard deviation
+#(and of the conditional mean) following package's models.
+#These methods are not being exported and are used internally
+#only.
+#
+#@param object these methods are not being exported.
+#@param n.ahead these methods are not being exported.
+#@param trunc these methods are not being exported.
+#@param ... these methods are not being exported.
+#
+#@return
+#They return lists with two numeric vectors as elements named
+#\code{sigt} and \code{cmeans}.
+#
+#@rdname forecasting-model-methods
+#
 methods::setMethod("fEGarch_predict", "fEGarch_fit_egarch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -245,7 +245,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_egarch",
 )
 
 # For Log-GARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_loggarch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -365,7 +365,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_loggarch",
 )
 
 # For APARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_aparch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -483,7 +483,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_aparch",
 )
 
 # For FIAPARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_fiaparch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -593,7 +593,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_fiaparch",
 )
 
 # For GJR-GARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_gjrgarch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -606,7 +606,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_gjrgarch",
 )
 
 # For FIGJR-GARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_figjrgarch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -619,7 +619,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_figjrgarch",
 )
 
 # For TGARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_tgarch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -632,7 +632,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_tgarch",
 )
 
 # For FITGARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_fitgarch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -645,7 +645,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_fitgarch",
 )
 
 # For GARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_garch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -666,7 +666,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_garch",
 )
 
 # For FIGARCH-type
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("fEGarch_predict", "fEGarch_fit_figarch",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
@@ -680,7 +680,7 @@ methods::setMethod("fEGarch_predict", "fEGarch_fit_figarch",
 )
 
 # Returns a simple list and not the entire input object
-#'@rdname forecasting-model-methods
+#@rdname forecasting-model-methods
 methods::setMethod("predict_internal", "fEGarch_fit",
   function(object, n.ahead = 10, trunc = NULL, ...) {
 
