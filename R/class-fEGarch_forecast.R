@@ -2,12 +2,12 @@ setClass("fEGarch_forecast",
   slots = c(
     cmeans = "ANY",
     sigt = "ANY",
-    model = "fEGarch_fit"
+    model = "ANY"
   ),
   prototype = list(
     cmeans = numeric(1),
     sigt = numeric(1),
-    model = new("fEGarch_fit")
+    model = numeric(1)
   )
 )
 

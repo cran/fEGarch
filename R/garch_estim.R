@@ -92,6 +92,9 @@
 #'conditional variance are initialized by zero).
 #'@param Prange a two-element vector that indicates the search boundaries for
 #'the parameter \eqn{P} in a (skewed) average Laplace distribution.
+#'@param skip_vcov a logical indicating whether or not to skip the computation
+#'of the variance-covariance matrix of the parameter estimators and therefore
+#'also standard error computation.
 #'
 #'@details
 #'See the documentation on \code{\link{garch}}, \code{\link{gjrgarch}},
@@ -154,7 +157,7 @@ garchm_estim <- function(rt,
                         start_pars = NULL, LB = NULL, UB = NULL, control = list(),
                         control_nonpar = list(), mean_after_nonpar = FALSE,
                         parallel = TRUE, ncores = max(1, future::availableCores() - 1),
-                        trunc = "none", presample = 50, Prange = c(1, 5)) {
+                        trunc = "none", presample = 50, Prange = c(1, 5), skip_vcov = FALSE) {
 
 
   model <- match.arg(model)
@@ -189,7 +192,8 @@ garchm_estim <- function(rt,
     ncores = ncores,
     trunc = trunc,
     presample = presample,
-    Prange = Prange
+    Prange = Prange,
+    skip_vcov = skip_vcov
   )
 
   if (model %in% c("garch", "gjrgarch", "tgarch", "aparch")) {

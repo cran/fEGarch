@@ -23,7 +23,8 @@ gjrgarch(
   ncores = max(1, future::availableCores() - 1),
   trunc = "none",
   presample = 50,
-  Prange = c(1, 5)
+  Prange = c(1, 5),
+  skip_vcov = FALSE
 )
 }
 \arguments{
@@ -128,6 +129,10 @@ conditional variance are initialized by zero).}
 
 \item{Prange}{a two-element vector that indicates the search boundaries for
 the parameter \eqn{P} in a (skewed) average Laplace distribution.}
+
+\item{skip_vcov}{a logical indicating whether or not to skip the computation
+of the variance-covariance matrix of the parameter estimators and therefore
+also standard error computation.}
 }
 \value{
 An object of S4-class \code{"fEGarch_fit_gjrgarch"}

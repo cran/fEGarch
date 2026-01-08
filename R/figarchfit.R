@@ -195,6 +195,9 @@ goal_fun_creator_figarch <- function(
 #'conditional variance are initialized by zero).
 #'@param Prange a two-element vector that indicates the search boundaries for
 #'the parameter \eqn{P} in a (skewed) average Laplace distribution.
+#'@param skip_vcov a logical indicating whether or not to skip the computation
+#'of the variance-covariance matrix of the parameter estimators and therefore
+#'also standard error computation.
 #'
 #'@details
 #'Let \eqn{\left\{r_t\right\}}, with \eqn{t \in \mathbb{Z}} as the
@@ -396,7 +399,8 @@ figarch <- function(rt, orders = c(1, 1),
                         start_pars = NULL, LB = NULL, UB = NULL, control = list(),
                         control_nonpar = list(), mean_after_nonpar = FALSE,
                         parallel = TRUE, ncores = max(1, future::availableCores() - 1),
-                        trunc = "none", presample = 50, Prange = c(1, 5)) {
+                        trunc = "none", presample = 50, Prange = c(1, 5),
+                        skip_vcov = FALSE) {
 
   inp_args <- mget(names(formals()), envir = environment())
 

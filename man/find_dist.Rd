@@ -10,7 +10,8 @@ find_dist(
   fix_mean = NULL,
   fix_sdev = NULL,
   Prange = c(1, 5),
-  criterion = c("bic", "aic")
+  criterion = c("bic", "aic"),
+  skip_vcov = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ with the default \code{NULL}, the unconditional standard deviation is estimated 
 
 \item{criterion}{either \code{"bic"} or \code{"aic"} to use BIC or AIC as
 the final selection criterion; by default \code{"bic"} is implemented.}
+
+\item{skip_vcov}{a logical indicating whether or not the computation of the
+variance-covariance matrix should be skipped.}
 }
 \value{
 Returns an object of class \code{"fEGarch_distr_est"} with various slots

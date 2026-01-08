@@ -418,43 +418,46 @@ ald_fit <- function(Prange, parallel, ncores, dfun1, dfun2, goal_fun_s, start_pa
 }
 
 compute_vcov <- function(goal_fun, pars, rt_core, scale_const, incl_mean, P_sel,
-                         cond_d, par_names, model_type, ...) {
+                         cond_d, par_names, model_type, skip_vcov, ...) {
 
   pf <- parent.frame()
 
   list2env(list(...), envir = environment())
 
-  # Compute the (negative) hessian at the optimum using a finite-difference
-  # approximation via "hessian" from "numDeriv"; is usually more stable
-  # nhess <- tryCatch(
-  #   expr = {hessCalc(func = goal_fun, pars = unname(pars), rt = rt_core)},
-  #   error = function(e1) {
-  #     warning("Unable to obtain standard errors.", call. = FALSE)
-  #     matrix(NA, nrow = length(pars), ncol = length(pars))
-  #   }
-  # )
+  if (skip_vcov) {   # skip over variance-covariance matrix computation
 
-  nhess <- hessCalc(func = goal_fun, pars = unname(pars), rt = rt_core)
-
-  # Obtain the variance-covariance matrix as the inverse of the
-  # negative hessian
-  I_mat <- diag(length(pars))    # Transformation matrix to rescale variance-covariance-matrix
-  if (incl_mean) {
-    I_mat[1, 1] <- scale_const   # For mean; not required for omega_sig, because that transformation is just an added constant
-  }
-  if (model_type %in% c("aparch", "fiaparch")) {
-    n_arma_im1 <- n_arma_pars + 1
-    I_mat[n_arma_im1, n_arma_im1] <- sc_delta
-  }
-
-
-  vcov_mat <- I_mat %*% solve(nhess) %*% I_mat   # Retransformation included
-  diag_vcov <- diag(vcov_mat)
-
-  if (all(!is.na(diag_vcov)) && any(diag_vcov < 0)) {
     vcov_mat <- matrix(NA, nrow = length(pars), ncol = length(pars))
     diag_vcov <- rep(NA, length(pars))
-    warning("Unable to compute Hessian matrix. No standard errors available as consequence.")
+
+
+  } else {
+
+    # Compute the (negative) hessian at the optimum using a finite-difference
+    # approximation via "hessian" from "numDeriv"; is usually more stable
+
+    nhess <- hessCalc(func = goal_fun, pars = unname(pars), rt = rt_core)
+
+    # Obtain the variance-covariance matrix as the inverse of the
+    # negative hessian
+    I_mat <- diag(length(pars))    # Transformation matrix to rescale variance-covariance-matrix
+    if (incl_mean) {
+      I_mat[1, 1] <- scale_const   # For mean; not required for omega_sig, because that transformation is just an added constant
+    }
+    if (model_type %in% c("aparch", "fiaparch")) {
+      n_arma_im1 <- n_arma_pars + 1
+      I_mat[n_arma_im1, n_arma_im1] <- sc_delta
+    }
+
+
+    vcov_mat <- I_mat %*% solve(nhess) %*% I_mat   # Retransformation included
+    diag_vcov <- diag(vcov_mat)
+
+    if (all(!is.na(diag_vcov)) && any(diag_vcov < 0)) {
+      vcov_mat <- matrix(NA, nrow = length(pars), ncol = length(pars))
+      diag_vcov <- rep(NA, length(pars))
+      warning("Unable to compute Hessian matrix. No standard errors available as consequence.")
+    }
+
   }
 
   if (cond_d %in% c("ald", "sald")) {

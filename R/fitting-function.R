@@ -129,6 +129,9 @@ nonpar_est <- function(rt, lm, nonparspec, n_test, control_nonpar) {
 #'conditional variance are initialized by zero).
 #'@param Prange a two-element vector that indicates the search boundaries for
 #'the parameter \eqn{P} in a (skewed) average Laplace distribution.
+#'@param skip_vcov a logical indicating whether or not to skip the computation
+#'of the variance-covariance matrix of the parameter estimators and therefore
+#'also standard error computation.
 #'
 #'@export
 #'
@@ -332,7 +335,7 @@ fEGarch <- function(spec = egarch_spec(),
     start_pars = NULL, LB = NULL, UB = NULL, control = list(),
     control_nonpar = list(), mean_after_nonpar = FALSE,
     parallel = TRUE, ncores = max(1, future::availableCores() - 1),
-    trunc = "none", presample = 50, Prange = c(1, 5)) {
+    trunc = "none", presample = 50, Prange = c(1, 5), skip_vcov = FALSE) {
 
   if (use_nonpar) {
 
@@ -361,7 +364,8 @@ fEGarch <- function(spec = egarch_spec(),
     ncores = ncores,
     trunc = trunc,
     presample = presample,
-    Prange = Prange
+    Prange = Prange,
+    skip_vcov = skip_vcov
   )
 
   if (use_nonpar) {

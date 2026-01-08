@@ -17,24 +17,37 @@ distr_est(
   dist = c("norm", "std", "ged", "ald", "snorm", "sstd", "sged", "sald"),
   fix_mean = NULL,
   fix_sdev = NULL,
-  Prange = c(1, 5)
+  Prange = c(1, 5),
+  skip_vcov = FALSE
 )
 
-norm_est(x, fix_mean = NULL, fix_sdev = NULL)
+norm_est(x, fix_mean = NULL, fix_sdev = NULL, skip_vcov = FALSE)
 
-std_est(x, fix_mean = NULL, fix_sdev = NULL)
+std_est(x, fix_mean = NULL, fix_sdev = NULL, skip_vcov = FALSE)
 
-ged_est(x, fix_mean = NULL, fix_sdev = NULL)
+ged_est(x, fix_mean = NULL, fix_sdev = NULL, skip_vcov = FALSE)
 
-ald_est(x, fix_mean = NULL, fix_sdev = NULL, Prange = c(1, 5))
+ald_est(
+  x,
+  fix_mean = NULL,
+  fix_sdev = NULL,
+  Prange = c(1, 5),
+  skip_vcov = FALSE
+)
 
-snorm_est(x, fix_mean = NULL, fix_sdev = NULL)
+snorm_est(x, fix_mean = NULL, fix_sdev = NULL, skip_vcov = FALSE)
 
-sstd_est(x, fix_mean = NULL, fix_sdev = NULL)
+sstd_est(x, fix_mean = NULL, fix_sdev = NULL, skip_vcov = FALSE)
 
-sged_est(x, fix_mean = NULL, fix_sdev = NULL)
+sged_est(x, fix_mean = NULL, fix_sdev = NULL, skip_vcov = FALSE)
 
-sald_est(x, fix_mean = NULL, fix_sdev = NULL, Prange = c(1, 5))
+sald_est(
+  x,
+  fix_mean = NULL,
+  fix_sdev = NULL,
+  Prange = c(1, 5),
+  skip_vcov = FALSE
+)
 }
 \arguments{
 \item{x}{a numeric vector with the data.}
@@ -56,6 +69,9 @@ therefore excluded from the estimation itself.}
 
 \item{Prange}{a two-element numeric vector, giving the boundaries of the search space
 for the shape parameter \eqn{P} in an ALD or its skewed variant.}
+
+\item{skip_vcov}{a logical indicating whether or not the computation of the
+variance-covariance matrix should be skipped.}
 }
 \value{
 Returns a list with the following elements.

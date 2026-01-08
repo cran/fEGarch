@@ -4,7 +4,17 @@
 \alias{predict_roll}
 \title{Generics for Forecasts}
 \usage{
-predict_roll(object, step_size = 1, trunc = NULL, ...)
+predict_roll(
+  object,
+  step_size = 1,
+  trunc = NULL,
+  refit_after = NULL,
+  steady_window = FALSE,
+  parallel = TRUE,
+  ncores = max(1, future::availableCores() - 1),
+  fitting_args = list(),
+  ...
+)
 }
 \arguments{
 \item{object}{the generics are currently without use.}
@@ -12,6 +22,16 @@ predict_roll(object, step_size = 1, trunc = NULL, ...)
 \item{step_size}{the generics are currently without use.}
 
 \item{trunc}{the generics are currently without use.}
+
+\item{refit_after}{the generics are currently without use.}
+
+\item{steady_window}{the generics are currently without use.}
+
+\item{parallel}{the generics are currently without use.}
+
+\item{ncores}{the generics are currently without use.}
+
+\item{fitting_args}{the generics are currently without use.}
 
 \item{...}{the generics are currently without use.}
 }

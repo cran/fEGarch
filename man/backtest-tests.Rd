@@ -135,7 +135,9 @@ where \eqn{S_{\text{uc}}} is the test statistic of the unconditional coverage te
 window.zoo <- get("window.zoo", envir = asNamespace("zoo"))
 rt <- window.zoo(SP500, end = "2002-12-31")
 model <- fEGarch(egarch_spec(), rt, n_test = 250)
-fcast <- predict_roll(model)
+# parallel = FALSE for better compatibility with CRAN checks;
+# should be set to TRUE for speed boost
+fcast <- predict_roll(model, refit_after = 50, parallel = FALSE)
 risk <- measure_risk(fcast, measure = c("VaR", "ES"), level = c(0.95, 0.975, 0.99))
 trafflight_test(risk)
 cov_tests(risk)

@@ -7,7 +7,17 @@
 \usage{
 \S4method{predict}{fEGarch_fit}(object, n.ahead = 10, trunc = NULL, ...)
 
-\S4method{predict_roll}{fEGarch_fit}(object, step_size = 1, trunc = NULL, ...)
+\S4method{predict_roll}{fEGarch_fit}(
+  object,
+  step_size = 1,
+  trunc = NULL,
+  refit_after = NULL,
+  steady_window = FALSE,
+  parallel = TRUE,
+  ncores = max(1, future::availableCores() - 1),
+  fitting_args = list(),
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class \code{"fEGarch_fit"},
@@ -31,6 +41,26 @@ with generics.}
 forecasts; by default, \code{step_size = 1} is employed,
 i.e. for the immediately subsequent observation time
 point for the entire test set.}
+
+\item{refit_after}{a positive integer indicatinmg the number
+of observations of the test
+set, after which the model should be refitted regularly; for the
+default \code{NULL} no refitting is done.}
+
+\item{steady_window}{a logical; if \code{FALSE}, the refitting
+will use all observations back to the first observation time point;
+for \code{TRUE}, the number of training observations is held constant,
+so that the window of training observations is shifted at every
+refitting.}
+
+\item{parallel}{a logical, indicating whether the models and forecasts
+should be produced in parallel for a speed boost.}
+
+\item{ncores}{the number of cores to use for parallel computations.}
+
+\item{fitting_args}{a list with further fitting arguments for any of the
+main fitting functions from this package; useful in the refitting, when
+other settings than the default need to be implemented.}
 }
 \value{
 Returns an object of class \code{"fEGarch_forecast"} that has the
@@ -39,8 +69,10 @@ forecasted conditional standard deviations and conditional
 means, respectively. If the training series saved in \code{object}
 has a special time series formatting like \code{"zoo"} or \code{"ts"},
 the formatting is adopted accordingly to these numeric
-output series. A third slot \code{@model} is the fitted model
-input object \code{object}.
+output series. A third slot \code{@model} is either the fitted model
+input object \code{object} (when refitting is disabled) or a list as a
+collection of fitted model objects of class \code{"fEGarch_fit"}
+(when refitting is enabled).
 }
 \description{
 Given a fitted model object from this package, conduct
@@ -68,7 +100,18 @@ example \code{step_size = 10} computes ten-step rolling point
 forecasts (starting at the tenth test time point).
 
 Refitting of models during the rolling point forecast procedure
-is currently not yet available.
+is available with package version 1.0.4 for GARCH-type models.
+\code{refit_after} defines
+after how many test observations the model should be refitted every time.
+\code{steady_window} addresses whether in refitting models the training
+observations should always start at the very first observation time
+point available, i.e. \code{steady_window = FALSE}, or whether the initial
+number of training observations should be kept throughout when refitting, so
+that the window width of training observations is kept but shifted when
+refitting, i.e. \code{steady_window = TRUE}. The behavior of
+\code{predict_roll} from package version 1.0.3 or earlier, i.e. obtaining
+rolling forecasts without model refitting, can be reproduced
+by setting \code{refit_after = NULL}.
 }
 \examples{
 window.zoo <- get("window.zoo", envir = asNamespace("zoo"))
@@ -80,8 +123,11 @@ fcast1 <- predict(model1, n.ahead = 10)
 fcast1
 
 # Rolling one-step forecasts (EGARCH with cond. normal distr.)
+# (Parallel computation disabled for better compatibility with
+# CRAN checks)
 model2 <- fEGarch(spec = egarch_spec(), rt, n_test = 250)
-fcast2 <- predict_roll(model2, step_size = 1)
+fcast2 <- predict_roll(model2, step_size = 1, refit_after = 50,
+                      parallel = FALSE)
 fcast2
 
 }

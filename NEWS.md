@@ -1,3 +1,11 @@
+# fEGarch 1.0.4 (2026-01-07)
+- the method `predict_roll()` now allows for refitting of the underlying
+  model via the new argument `refit_after` during the test period.
+- `measure_risk()` and backtest functions take into account the potential
+  refitting to compute risk measures and backtest quantities.
+- all fitting functions now include an argument `skip_vcov` to allow for
+  skipping the variance-covariance matrix computation
+
 # fEGarch 1.0.3 (2025-11-07)
 - numerical stability of estimators improved regarding parameter mu in cases
   with strong outliers

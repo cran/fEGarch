@@ -72,7 +72,11 @@ Afterwards, use the model specification returned by `fEGarch_spec()`
 together with your data object and apply the estimation function
 `fEGarch()` to them. As can be seen, the package also imports and
 exports the pipe operator `%>%` of the `magrittr` package for a
-simplified coding workflow.
+simplified coding workflow. Note that the object `SP500` in the package
+is already formatted as an object of class `"zoo"`, which also already
+contains information about the observation time points. This will later
+on automate the x-axis formatting in automated plots created with the
+package.
 
 ``` r
 ### 2. Use specification to fit model to data
@@ -400,7 +404,10 @@ to compute, given a fitted model from the package, either multistep
 out-of-sample point forecasts of the conditional standard deviation (and
 of the conditional mean) or rolling point forecasts (of arbitrarily
 selectable step size) of the conditional standard deviation (and of the
-conditional mean) over some reserved test sample.
+conditional mean) over some reserved test sample. Setting `refit_after`
+to a positive integer in `predict_roll()` forces refitting of the model
+after that number of observations before continuing with the rolling
+forecasts.
 
 For multistep forecasts into the future, consider `predict` and its
 argument `n.ahead`.
@@ -492,7 +499,7 @@ new_model
 #> Information criteria (parametric part):
 #> AIC: -6.4792, BIC: -6.4726
 fc2 <- new_model %>%
-  predict_roll()
+  predict_roll(refit_after = 25)
 plot(
   cbind(
     "Return" = new_model@test_obs,
@@ -543,7 +550,11 @@ simplified formatting of the x-axis.
 
 Moreover, a test suite consisting of traffic light tests for VaR and ES
 and of coverage and independence tests can be applied using
-`backtest_suite` on the output of `measure_risk`.
+`backtest_suite` on the output of `measure_risk`. Note that test results
+(rejecting or not rejecting the null hypothesis) for the coverage and
+independence tests are stated under consideration of a 5-percent
+significance level; however, other significance levels can be considered
+as well via the also given p-values for each of these tests.
 
 ``` r
 risk %>%
@@ -571,12 +582,12 @@ risk %>%
 #> ***********
 #> 
 #> Conf. level: 0.975
-#> Severity of breaches: 6.9709
-#> Cumul. prob.: 0.9964
+#> Severity of breaches: 6.9856
+#> Cumul. prob.: 0.9965
 #> Zone: Yellow zone
 #> 
 #> Conf. level: 0.99
-#> Severity of breaches: 5.0001
+#> Severity of breaches: 4.9888
 #> Cumul. prob.: 1.0000
 #> Zone: Red zone
 #> 
@@ -588,7 +599,7 @@ risk %>%
 #> 
 #> Following 99%-VaR, 97.5%-VaR and 97.5%-ES.
 #> 
-#> WAD: 3.4707
+#> WAD: 3.4754
 #> 
 #> 
 #> ***************************************
@@ -661,17 +672,17 @@ risk %>%
   loss_functions(penalty = 1e-04)
 ```
 
-A better model regarding VaR and ES forecasting for this particular
-example could be implemented and checked as follows.
+A slightly better model regarding VaR and ES forecasting for this
+particular example could be implemented and checked as follows.
 
 ``` r
-# Fit and check an ARMA(1, 0)-FILog-GARCH(1, d, 1) with
-# conditional t-distribution
-new_model2 <- filoggarch_spec(cond_dist = "std") %>%
-  fEGarch(rt, n_test = 250, meanspec = mean_spec(orders = c(1, 0)))
+# Fit and check an Semi-Log-GARCH(1, d, 1) with
+# conditional skew-t-distribution
+new_model2 <- loggarch_spec(cond_dist = "sstd") %>%
+  fEGarch(rt, n_test = 250, use_nonpar = TRUE)
 
 risk_nm2 <- new_model2 %>%
-  predict_roll() %>%
+  predict_roll(refit_after = 25) %>%
   measure_risk()
 
 risk_nm2 %>%
@@ -685,13 +696,13 @@ risk_nm2 %>%
 #> ************
 #> 
 #> Conf. level: 0.975
-#> Breaches: 8
-#> Cumul. prob.: 0.8229
+#> Breaches: 9
+#> Cumul. prob.: 0.9005
 #> Zone: Green zone
 #> 
 #> Conf. level: 0.99
-#> Breaches: 4
-#> Cumul. prob.: 0.8922
+#> Breaches: 3
+#> Cumul. prob.: 0.7581
 #> Zone: Green zone
 #> 
 #> 
@@ -699,13 +710,13 @@ risk_nm2 %>%
 #> ***********
 #> 
 #> Conf. level: 0.975
-#> Severity of breaches: 4.8054
-#> Cumul. prob.: 0.8801
+#> Severity of breaches: 4.2807
+#> Cumul. prob.: 0.7905
 #> Zone: Green zone
 #> 
 #> Conf. level: 0.99
-#> Severity of breaches: 1.2110
-#> Cumul. prob.: 0.4829
+#> Severity of breaches: 1.3067
+#> Cumul. prob.: 0.5248
 #> Zone: Green zone
 #> 
 #> 
@@ -716,7 +727,7 @@ risk_nm2 %>%
 #> 
 #> Following 99%-VaR, 97.5%-VaR and 97.5%-ES.
 #> 
-#> WAD: 1.4177
+#> WAD: 1.0098
 #> 
 #> 
 #> ***************************************
@@ -726,15 +737,15 @@ risk_nm2 %>%
 #> H0: true share of covered observations = theoretical share of VaR
 #> 
 #> Conf. level: 0.975
-#> Breaches: 8
-#> Test statistic: 0.4624
-#> p-value: 0.4965
+#> Breaches: 9
+#> Test statistic: 1.0947
+#> p-value: 0.2954
 #> Decision: Do not reject H0
 #> 
 #> Conf. level: 0.99
-#> Breaches: 4
-#> Test statistic: 0.7691
-#> p-value: 0.3805
+#> Breaches: 3
+#> Test statistic: 0.0949
+#> p-value: 0.7580
 #> Decision: Do not reject H0
 #> 
 #> 
@@ -746,15 +757,15 @@ risk_nm2 %>%
 #>     of breach or no breach at previous time point
 #> 
 #> Conf. level: 0.975
-#> Breaches: 8
-#> Test statistic: 0.5312
-#> p-value: 0.4661
+#> Breaches: 9
+#> Test statistic: 0.6752
+#> p-value: 0.4113
 #> Decision: Do not reject H0
 #> 
 #> Conf. level: 0.99
-#> Breaches: 4
-#> Test statistic: 0.1306
-#> p-value: 0.7178
+#> Breaches: 3
+#> Test statistic: 0.0732
+#> p-value: 0.7868
 #> Decision: Do not reject H0
 #> 
 #> 
@@ -767,15 +778,15 @@ risk_nm2 %>%
 #>     and equal to theoretical share of VaR
 #> 
 #> Conf. level: 0.975
-#> Breaches: 8
-#> Test statistic: 1.0081
-#> p-value: 0.6041
+#> Breaches: 9
+#> Test statistic: 1.7927
+#> p-value: 0.4081
 #> Decision: Do not reject H0
 #> 
 #> Conf. level: 0.99
-#> Breaches: 4
-#> Test statistic: 0.9120
-#> p-value: 0.6338
+#> Breaches: 3
+#> Test statistic: 0.1722
+#> p-value: 0.9175
 #> Decision: Do not reject H0
 ```
 
@@ -795,9 +806,11 @@ standard deviation for the same test period and the one-step rolling
 point forecasts of the conditional mean for the same test period,
 respectively. Furthermore, also assume that they were not obtained
 through a parametric (or semiparametric) GARCH-type model but through
-some fully nonparametric idea like for example a neural network. Given
-those series, the `fEGarch` package provides a simple way to compute and
-backtest VaR and ES even for such nonparametric approaches.
+some fully nonparametric idea like for example a neural network. To be
+precise, the forecasts would need to be obtained without model
+refitting. Given those series, the `fEGarch` package provides a simple
+way to compute and backtest VaR and ES even for such nonparametric
+approaches (without model refitting).
 
 ``` r
 opt_dist <- resids %>%
@@ -1002,5 +1015,5 @@ citing
 
 - Schulz, D., Feng, Y., Peitz, C., & Ayensu, O. K. (2025). fEGarch:
   SM/LM EGARCH & GARCH, VaR/ES Backtesting & Dual LM Extensions. R
-  package version 1.0.3. URL:
+  package version 1.0.4. URL:
   <https://CRAN.R-project.org/package=fEGarch>.

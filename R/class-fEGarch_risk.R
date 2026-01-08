@@ -271,8 +271,8 @@ setMethod("autoplot", "fEGarch_risk", function(object, which = NULL, ...) {
       "1" = "black", "2" = "gold2", "3" = 4
     ), labels = c(
       "1" = "Returns",
-      "2" = paste0(100 * which, "%-VaR"),
-      "3" = paste0(100 * which, "%-ES")
+      "2" = paste0(100 * as.numeric(which), "%-VaR"),
+      "3" = paste0(100 * as.numeric(which), "%-ES")
     )) +
     ggplot2::ylab("Return, VaR and ES") +
     ggplot2::ggtitle("Backtesting results")

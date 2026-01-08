@@ -7,7 +7,7 @@ general_garch_fitting <- function(rt, model_type, orders = c(1, 1),
                         start_pars = NULL, LB = NULL, UB = NULL, control = list(),
                         control_nonpar = list(), mean_after_nonpar = FALSE,
                         parallel = TRUE, ncores = max(1, future::availableCores() - 1),
-                        trunc = "none", presample = 50, Prange = c(1, 5)) {
+                        trunc = "none", presample = 50, Prange = c(1, 5), skip_vcov = FALSE) {
 
 
   p <- orders[[1]]
@@ -519,7 +519,8 @@ general_garch_fitting <- function(rt, model_type, orders = c(1, 1),
     par_names = par_names,
     sc_delta = sc_delta,
     n_arma_pars = n_arma_pars,
-    model_type = type_inp     # treat as APARCH / FIAPARCH with delta fixed at 2 for rescaling
+    model_type = type_inp,     # treat as APARCH / FIAPARCH with delta fixed at 2 for rescaling
+    skip_vcov = skip_vcov
   )
 
   rescale_estim(

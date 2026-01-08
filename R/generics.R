@@ -90,7 +90,7 @@ setGeneric("include_mean<-", function(x, value) {standardGeneric("include_mean<-
 #
 #
 
-setGeneric("fEGarch_fit", function(spec, rt, drange = c(0, 1), meanspec = mean_spec(), Drange = c(0, 1), n_test = 0, start_pars = NULL, LB = NULL, UB = NULL, control = list(), parallel = TRUE, ncores = max(1, future::availableCores() - 1), trunc = floor(0.4 * length(rt)), presample = 50, Prange = c(1, 5)) {standardGeneric("fEGarch_fit")})
+setGeneric("fEGarch_fit", function(spec, rt, drange = c(0, 1), meanspec = mean_spec(), Drange = c(0, 1), n_test = 0, start_pars = NULL, LB = NULL, UB = NULL, control = list(), parallel = TRUE, ncores = max(1, future::availableCores() - 1), trunc = floor(0.4 * length(rt)), presample = 50, Prange = c(1, 5), skip_vcov = FALSE) {standardGeneric("fEGarch_fit")})
 
 #====================================================#
 
@@ -101,6 +101,8 @@ setGeneric("fEGarch_predict", function(object, n.ahead = 10, trunc = NULL, ...) 
 
 #@rdname forecasting-generics
 setGeneric("predict_internal", function(object, n.ahead = 10, trunc = NULL, ...) {standardGeneric("predict_internal")})
+setGeneric("predict_roll_internal", function(object, step_size = 1, trunc = NULL, ...) {standardGeneric("predict_roll_internal")})
+
 
 #====================================================#
 
@@ -111,6 +113,11 @@ setGeneric("predict_internal", function(object, n.ahead = 10, trunc = NULL, ...)
 #'@param object the generics are currently without use.
 #'@param step_size the generics are currently without use.
 #'@param trunc the generics are currently without use.
+#'@param refit_after the generics are currently without use.
+#'@param steady_window the generics are currently without use.
+#'@param parallel the generics are currently without use.
+#'@param ncores the generics are currently without use.
+#'@param fitting_args the generics are currently without use.
 #'@param ... the generics are currently without use.
 #'
 #'@return
@@ -121,7 +128,7 @@ setGeneric("predict_internal", function(object, n.ahead = 10, trunc = NULL, ...)
 #'
 #'@rdname forecasting-generics
 #'
-setGeneric("predict_roll", function(object, step_size = 1, trunc = NULL, ...) {standardGeneric("predict_roll")})
+setGeneric("predict_roll", function(object, step_size = 1, trunc = NULL, refit_after = NULL, steady_window = FALSE, parallel = TRUE, ncores = max(1, future::availableCores() - 1), fitting_args = list(), ...) {standardGeneric("predict_roll")})
 
 #====================================================#
 #'Generics for Accessing Model Estimation Output Elements

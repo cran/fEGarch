@@ -127,7 +127,9 @@ risk
 window.zoo <- get("window.zoo", envir = asNamespace("zoo"))
 rt <- window.zoo(SP500, end = "2002-12-31")
 model2 <- fEGarch(egarch_spec(), rt, n_test = 250)
-fcast <- predict_roll(model2)
+# parallel = FALSE only for better compatibility with CRAN checks;
+# should be set to TRUE for speed boost
+fcast <- predict_roll(model2, parallel = FALSE)
 risk2 <- measure_risk(fcast, measure = c("VaR", "ES"), level = c(0.95, 0.975, 0.99))
 risk2
 
@@ -139,7 +141,9 @@ risk2
 window.zoo <- get("window.zoo", envir = asNamespace("zoo"))
 rt <- window.zoo(SP500, end = "2005-12-31")
 model <- fEGarch(egarch_spec(), rt, n_test = 250)
-fc <- model \%>\% predict_roll()
+# parallel = FALSE only for better compatibility with CRAN checks;
+# should be set to TRUE for speed boost
+fc <- model \%>\% predict_roll(refit_after = 50, parallel = FALSE)
 
 test_obs <- model@test_obs   # Test observations
 sigt <- fc@sigt              # Conditional volatility forecasts

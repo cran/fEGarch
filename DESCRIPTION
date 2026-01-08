@@ -1,7 +1,7 @@
 Package: fEGarch
 Type: Package
 Title: SM/LM EGARCH & GARCH, VaR/ES Backtesting & Dual LM Extensions
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: 
     c(person(given = "Dominik",
         family = "Schulz",
@@ -83,7 +83,7 @@ Imports: Rcpp (>= 1.0.9), Rsolnp, smoots, esemifar, zoo, stats, utils,
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2025-11-07 10:28:09 UTC; Dominik Schulz
+Packaged: 2026-01-07 15:18:16 UTC; Dominik Schulz
 Author: Dominik Schulz [aut, cre] (Paderborn University, Germany),
   Yuanhua Feng [aut] (Paderborn University, Germany),
   Christian Peitz [aut] (Financial Intelligence Unit (German Government)),
@@ -93,4 +93,4 @@ Author: Dominik Schulz [aut, cre] (Paderborn University, Germany),
     Germany),
   Shujie Li [ctb] (Paderborn University, Germany)
 Repository: CRAN
-Date/Publication: 2025-11-07 13:10:19 UTC
+Date/Publication: 2026-01-08 00:20:10 UTC
