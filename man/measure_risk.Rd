@@ -57,7 +57,7 @@ The S4 methods all return an object of class \code{"fEGarch_risk"} with elements
 risk measures are calculated. \code{measures} is a list with elements
 \code{VaR} and \code{ES}, distinguishing between computed VaR and ES values.
 These elements again are list with named elements representing the various
-computed series. \code{model} is the fitted model object.
+computed series. \code{model} is the fitted model or a list of multiple fitted model objects.
 }
 \description{
 Provides easy access to value-at-risk (VaR) and expected shortfall (ES)

@@ -1,6 +1,6 @@
-5a519ea1cd68a78a75c424c440d3499f *DESCRIPTION
+25ec38ca0573c0ef6d2b1118239400e2 *DESCRIPTION
 9e9be19857a77e1a070e2de30fdfa786 *NAMESPACE
-6293b712b6f642d53a9792630c825386 *NEWS.md
+3c756ab7fff7696c0e9f875ca08206a8 *NEWS.md
 db7ddba2c7f92668c19907d1c6c019e4 *R/AttachMessage.R
 b42bd51dc40e2baba0c736506638df91 *R/RcppExports.R
 494b06c8a999e78d513cf5d9fe1443a3 *R/aparchfit.R
@@ -24,7 +24,7 @@ eb1df14bfbef6cd6cd65f1e7810b0ed6 *R/figarchfit.R
 c1536c5f281464fbe35f394269eeafec *R/figjrgarchfit.R
 9a64d78f37a737b7758927bfcb3f54dc *R/fitgarchfit.R
 17a6305180ccad26aa173a21b0665056 *R/fitting-function.R
-46275aa9e943f0a76d6b7abdcc37f874 *R/forecasting-functions.R
+c77c14bcc016e3358265bf6d790fbeae *R/forecasting-functions.R
 35e2a988e9196380d0119cacf9a53de9 *R/format_applier_ts.R
 8d459db749da4b47d2a9e68feacc49b2 *R/garch_estim.R
 cac73812a5d4cc1ffb30b3e89435a39d *R/garchfit.R
@@ -50,9 +50,9 @@ bf557d66aacc1199feea5e9abfddf676 *R/sim-functions.R
 6d647cf2380fb5a99728d753e18e621d *R/test-functions.R
 2b45e6ca2ca0d68c54d60ab3e081be5a *R/tgarchfit.R
 b14ba66caef3a7b01bbd8ad722fc5ddd *R/ts_split_train_and_test.R
-cef65ce39af8797c8f025ffceb55b3bf *R/ufRisk-functions.R
+96d781f9b1a5a4f27686b0e260cb4f74 *R/ufRisk-functions.R
 9b098e9e41e66e1050874858b5b648e9 *R/varescalc.R
-8cac2a138a1535d41ad4c57f16ed1271 *README.md
+0a6152b0424aea8237c4f9cddd100749 *README.md
 657800b5cefc6d53a947366edf8d2379 *data/UKinflation.rda
 c3a87acac0bf2e7c09844d76a03a4f18 *data/sp500.rda
 77d275c34ef1cb80429129d34a6c3ca2 *man/SP500.Rd
@@ -117,7 +117,7 @@ d927f2eb53bb438e228c30e29c741c49 *man/gjrgarch_sim.Rd
 5d818527b6ed01c82b793f801fb25bec *man/loss_functions.Rd
 12a45081f01fe655481b8f30d555a51c *man/mean_spec.Rd
 0302cc74806251a8170ccd9a0773ea90 *man/mean_spec_methods.Rd
-9cdca3f181dff07ee966a08abeadb1a7 *man/measure_risk.Rd
+7a1a04dacb7c05c889608b905bba3b03 *man/measure_risk.Rd
 1b7634c48425569397e2d7feead22f2b *man/nonpar-generics.Rd
 12b03aff42a19a76e11f569df1aca18b *man/plot-fEGarch_fit-ANY-method.Rd
 86f797463ac5db8afd2e2ae8578312ed *man/plot-fEGarch_risk-ANY-method.Rd

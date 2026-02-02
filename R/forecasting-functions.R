@@ -1097,7 +1097,7 @@ methods::setMethod("predict_roll", "fEGarch_fit",
     fc_fun_other_garch <- function(rt, n_test, fit_fun) {
       fitting_args <- adj_fitting_args(rt = rt, n_test = n_test, fitting_args = fitting_args)
       fitting_args[["cond_dist"]] <- cdist
-      do.call(fit_fun, fitting_args) %>% predict_roll_internal()
+      do.call(fit_fun, fitting_args) %>% predict_roll_internal(step_size = step_size, trunc = trunc)
     }
 
     # Select the proper fitting and forecasting function

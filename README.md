@@ -1015,5 +1015,5 @@ citing
 
 - Schulz, D., Feng, Y., Peitz, C., & Ayensu, O. K. (2025). fEGarch:
   SM/LM EGARCH & GARCH, VaR/ES Backtesting & Dual LM Extensions. R
-  package version 1.0.4. URL:
+  package version 1.0.5. URL:
   <https://CRAN.R-project.org/package=fEGarch>.

@@ -92,7 +92,7 @@ setGeneric("measure_risk", function(object, measure = c("VaR", "ES"), level = c(
 #'risk measures are calculated. \code{measures} is a list with elements
 #'\code{VaR} and \code{ES}, distinguishing between computed VaR and ES values.
 #'These elements again are list with named elements representing the various
-#'computed series. \code{model} is the fitted model object.
+#'computed series. \code{model} is the fitted model or a list of multiple fitted model objects.
 #'
 #'@examples
 #'
@@ -499,7 +499,21 @@ setMethod("trafflight_test", "fEGarch_risk",
 
   if (!is.list(object@model)) {object@model <- list(object@model)}
   slotnames <- methods::slotNames(object@model[[1]])
-  n_te_base <- length(object@model[[1]]@test_obs)
+
+  inh <- inherits(object@model[[1]], "fEGarch_distr_est")
+
+  grab_n_te <- if (inh) {   # Grabbing number of test observations depending on model
+    function(obj, idx) {
+      length(obj@observations)
+    }
+  } else {
+    function(obj, idx) {
+      length(obj@model[[idx]]@test_obs)
+    }
+  }
+
+  n_te_base <- grab_n_te(obj = object, idx = 1)
+
   cond_d <- if ("cond_dist" %in% slotnames) {
     object@model[[1]]@cond_dist
   } else if ("dist" %in% slotnames) {
@@ -589,7 +603,7 @@ setMethod("trafflight_test", "fEGarch_risk",
           args[["skew"]] <- skew
           args[["shape"]] <- shape
 
-          n_te <- length(object@model[[j]]@test_obs)
+          n_te <- grab_n_te(obj = object, idx = j)
           idx_lo <- (j - 1) * n_te_base + 1
           idx_up <- (j - 1) * n_te_base + n_te
 
