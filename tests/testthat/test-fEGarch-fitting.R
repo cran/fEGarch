@@ -8,7 +8,7 @@ test_that("fEGarch function works as intended", {
   })
 
   expect_no_error({
-   fEGarch(spec, rt, meanspec = mean_spec(orders = c(1, 1)))
+   suppressWarnings(fEGarch(spec, rt, meanspec = mean_spec(orders = c(1, 1))))
   })
 
   expect_no_error({
@@ -76,7 +76,7 @@ test_that("fEGarch function works as intended", {
   })
 
   expect_no_error({
-   fEGarch(egarch_spec(cond_dist = "ald"), rt, parallel = FALSE, Prange = c(1, 3))
+   suppressWarnings(fEGarch(egarch_spec(cond_dist = "ald"), rt, parallel = FALSE, Prange = c(1, 3)))
   })
 
   expect_no_error({

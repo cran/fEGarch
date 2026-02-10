@@ -1018,6 +1018,7 @@ garch_sim <- function(pars = list(
                          n = 1000, nstart = 5e3, trunc = "none") {
 
   p <- length(pars$phi)
+  if (p == 0) p <- 1
   pars[["delta"]] <- 2   # Fix delta at 1 and use APARCH functions
   pars[["gamma"]] <- rep(0, p)
   aparch_sim(

@@ -296,7 +296,9 @@ nonpar_est <- function(rt, lm, nonparspec, n_test, control_nonpar) {
 #'model
 #'# Simultaneously model conditional mean
 #'spec <- egarch_spec()
-#'model2 <- fEGarch(spec, rt, meanspec = mean_spec(orders = c(1, 1)))
+#'model2 <- suppressWarnings(
+#'  fEGarch(spec, rt, meanspec = mean_spec(orders = c(1, 1)))
+#')
 #'model2
 #'
 #'

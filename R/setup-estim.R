@@ -176,8 +176,8 @@ adj_sigt_fun <- function(p_ar, q_ma, pg0, qg0, lm_arma, incl_mean, n_arma_pars,
       args[["..."]] <- NULL
       dot_args <- list(...)
       all_args <- c(args, dot_args)
-      rm(dot_args)
-      rm(args)
+      suppressWarnings(rm("dot_args", envir = environment()))
+      suppressWarnings(rm("args", envir = environment()))
 
       # Obtain ARMA / FARIMA parameters from theta
       arma_pars <- grab_fun(

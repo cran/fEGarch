@@ -1,11 +1,25 @@
+# fEGarch 1.0.6 (2026-02-10)
+- GJR-GARCH, TGARCH, APARCH, FIGJR-GARCH, FITGARCH and FIAPARCH 
+  pre-sample values have been stabilized slightly.
+- In dual models, where for some models in the volatility part pre-sample
+  quantities are set through empirical values, a preliminary
+  ARMA or FARIMA estimation step has been implemented to obtain their
+  residuals and subsequently obtain the pre-sample values based on those
+  residuals; this stabilizes estimated conditional standard deviations
+  at the beginning of the training period; dual models with
+  long-memory EGF part for the variance model stay fully unaffected.
+- fixed a bug in `garch_sim`, where the simulation failed, if no
+  setting of `phi` in the list for argument `pars` was provided
+  manually.
+
 # fEGarch 1.0.5 (2026-02-02)
 - a bug in the backtesting functions for output of 
   `measure_risk,fEGarch_distr_est-method` was fixed that was introduced
-  with package version 1.0.4; this did not affect the `measure_risk`.
+  with package version 1.0.4; this did not affect the `measure_risk` function.
 - step size different from 1 in rolling volatility forecasts under model
   refitting now available for GARCH-type models different from the exponential
   GARCH family (was already and is available for exponential GARCH family
-  models)
+  models).
 
 # fEGarch 1.0.4 (2026-01-07)
 - the method `predict_roll()` now allows for refitting of the underlying
